@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Age Prediction</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+label, button {
+    display: block;
+    margin-top: 10px;
+}
+input, button {
+    margin-bottom: 10px;
+    width: 300px;
+    padding: 8px;
+}
+#result {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
+}
+</style>
+</head>
+<body>
+<h1>Name to Age Prediction</h1>
+<form>
+    <label for="name">Enter your name:</label>
+    <input type="text" id="name" placeholder="Name">
+    <button type="button" onclick="submitForm()">Submit</button>
+</form>
+<div id="result"></div>
+
+<script>
+async function submitForm() {
+    const name = document.getElementById('name').value;
+    const response = await fetch(`https://api.agify.io?name=${name}`);
+    const data = await response.json();
+    const resultDiv = document.getElementById('result');
+    if (data.age) {
+        resultDiv.innerHTML = `Your name is: <strong>${data.name}</strong>, Your predicted age is: <strong>${data.age}</strong>`;
+    } else {
+        resultDiv.innerHTML = `No age prediction found for ${data.name}.`;
+    }
+}
+</script>
+</body>
+</html>
